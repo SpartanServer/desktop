@@ -1,0 +1,41 @@
+-- vim: ft=haskell
+Config { font = "Ricty Diminished Regular:size=13:bold:antialias=true"
+       , bgColor = "#1c1c1c"
+       , fgColor = "#404040"
+       --, position = TopSize C 100 25
+       , position = Static { xpos = 0 , ypos = 0, width = 1820, height = 25 }
+       , lowerOnStart = False
+       , overrideRedirect = False
+       , border = BottomBM 0
+       , borderColor = "#4e4e4e"
+       , commands = [ Run Network "eth0" [ "-t"        , "down<rx>  up<tx>  "
+                                          , "--Low"    , "40"
+                                          , "--High"   , "200"
+                                          , "-m"       , "4"
+                                          , "--normal" , "#b0bdbd"
+                                          , "--high"   , "#a5d6a7"
+                                          ] 10
+                    , Run MultiCpu        [ "-t"       , "■ <total0>.<total1>  "
+                                          , "--Low"    , "40"
+                                          , "--High"   , "85"
+                                          , "-m"       , "2"
+                                          , "--normal" , "#b0bdbd"
+                                          , "--high"   , "#ef9a9a"
+                                          ] 10
+
+                    , Run Memory          [ "-t"       , "□ <usedratio>%  "
+                                          , "--Low"    , "40"
+                                          , "--High"   , "90"
+                                          , "-m"       , "2"
+                                          , "--normal" , "#b0bdbd"
+                                          , "--high"   , "#ef9a9a"
+                                          ] 10
+                    -- battery monitor
+                    , Run Date "%a %m/%d %H:%M" "date" 10
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " %StdinReader% }{ %multicpu%%memory%%eth0%<fc=#ece391>%date%</fc> "
+       }
+
